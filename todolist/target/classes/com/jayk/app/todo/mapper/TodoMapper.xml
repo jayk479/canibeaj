@@ -3,6 +3,6 @@
 
 <mapper namespace="com.jayk.app.todo.mapper.TodoMapper">
 	<select id="selectAllTodo" resultType="TodoVO">
-		SELECT task, task_date, done FROM todolist ORDER BY task_date
+		SELECT task_no, task, task_date, done FROM todolist ORDER BY task_no
 	</select>
 </mapper>

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class TodoVO {
-	
+	private int taskNo;
 	private String task;
 	private Date taskDate;
 	private int done;
