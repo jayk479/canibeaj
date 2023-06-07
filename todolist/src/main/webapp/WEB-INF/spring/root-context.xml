@@ -6,29 +6,6 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- datasource connection pool -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@127.0.0.1:1521:xe" />
-		<property name="username" value="hr" />
-		<property name="password" value="hr" />
-	</bean>
-
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
-	</bean>
-
-	<!-- mybatis SqlSessionFactory -->
-	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation"
-			value="classpath:mybatis-config.xml" />
-	</bean>
-
-	<mybatis-spring:scan
-		base-package="com.jayk.app.**.mapper" />
-
+	
 
 </beans>
