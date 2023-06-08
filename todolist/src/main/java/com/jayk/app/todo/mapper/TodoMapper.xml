@@ -2,7 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jayk.app.todo.mapper.TodoMapper">
-	<select id="selectAllTodo" resultType="TodoVO">
-		SELECT task_no, task, task_date, done FROM todolist ORDER BY task_no
+	<sql id="selectTodo">
+		SELECT task_no
+			   , task
+			   , task_date
+			   , done
+		FROM todolist
+	</sql>
+	<select id="selectTodoList" resultType="TodoVO">
+		<include refid="selectTodo" />
+		ORDER BY task_no
 	</select>
+	
+	<select id="selectTodo" resultType="TodoVO">
+		<include refid="selectTodo" />
+		WHERE task_no = #{taskNo}
+	</select>
+	
+	<insert id="insertTodo" parameterType="TodoVO">
+		<selectKey keyProperty="taskNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(task_no)), 0) + 1
+			FROM todolist
+		</selectKey>
+		INSERT INTO todolist (task_no, task, task_date, done)
+		VALUES (#{taskNo}, #{task}, sysdate, 0)
+	</insert>
+	
+	<update id="updateTodo" parameterType="TodoVO">
+		UPDATE todolist
+		<set>
+			<if test="task != null and task != ''">
+				task=#{task},
+			</if>
+			 task_date = sysdate
+		</set>
+		WHERE taks_no=#{taskNo}
+	</update>
+	
+	<delete id="delelteTodo" parameterType="int">
+		DELETE FROM todolist WHERE task_no=#{taskNo}
+	</delete>
 </mapper>
